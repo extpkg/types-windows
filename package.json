@@ -1,0 +1,15 @@
+{
+  "name": "@extpkg/types-windows",
+  "version": "1.0.0",
+  "description": "Types for EXT windows module",
+  "author": "EXT, Inc.",
+  "license": "MIT",
+  "keywords": ["types", "ext"],
+  "repository": {
+	"type": "git",
+	"url": "https://github.com/extpkg/types-windows.git"
+  },
+  "publishConfig": {
+	"access": "public"
+  }
+}
