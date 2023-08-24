@@ -2,19 +2,19 @@
 declare namespace ext.windows {
 
   /** Window point structure. */
-  export interface ExtWindowPoint {
+  export interface Point {
     x: number
     y: number
   }
 
   /** Window size structure. */
-  export interface ExtWindowSize {
+  export interface Size {
     width: number
     height: number
   }
 
   /** Window rectangle structure. */
-  export interface ExtWindowRectangle {
+  export interface Rectangle {
     x: number
     y: number
     width: number
@@ -22,7 +22,7 @@ declare namespace ext.windows {
   }
 
   /** Window object. */
-  export interface ExtWindow {
+  export interface Window {
     /** Window ID. */
     id: string 
     /** Owning extension ID. */
@@ -51,10 +51,10 @@ declare namespace ext.windows {
   }
 
   /** Window creation properties. */
-  export interface ExtWindowProperties {
+  export interface WindowProperties {
     width?: number
     height?: number
-    position?: ExtWindowPoint
+    position?: Point
     useContentSize?: boolean
     center?: boolean
     minWidth?: number
@@ -84,7 +84,7 @@ declare namespace ext.windows {
     opacity?: number
     transparent?: boolean
     titleBarStyle?: 'inset' | 'hidden'
-    titleButtonsPosition?: ExtWindowPoint
+    titleButtonsPosition?: Point
     roundedCorners?: boolean
     focused?: boolean
     maximized?: boolean
@@ -98,10 +98,10 @@ declare namespace ext.windows {
   }
 
   /** Window update properties. */
-  export interface ExtWindowUpdate {
+  export interface WindowUpdate {
     width?: number
     height?: number
-    position?: ExtWindowPoint
+    position?: Point
     useContentSize?: boolean
     center?: boolean
     minWidth?: number
@@ -127,7 +127,7 @@ declare namespace ext.windows {
     backgroundColor?: string
     shadow?: boolean
     opacity?: number
-    titleButtonsPosition?: ExtWindowPoint
+    titleButtonsPosition?: Point
     focused?: boolean
     maximized?: boolean
     minimized?: boolean
@@ -139,7 +139,7 @@ declare namespace ext.windows {
   }
 
   /** Menu item properties. */
-  export interface ExtWindowMenuItem {
+  export interface MenuItem {
     role?: (
       'undo' | 'about' | 'redo' | 'cut' | 'copy' | 'paste' |'pasteAndMatchStyle' |
       'selectAll' | 'delete' | 'minimize' | 'close' | 'quit' | 'reload' | 'forceReload' |
@@ -157,12 +157,12 @@ declare namespace ext.windows {
     visible?: boolean
     checked?: boolean
     registerAccelerator?: boolean
-    submenu?: ExtWindowMenuItem[]
+    submenu?: MenuItem[]
     tag?: string
   }
 
   /** Window ID. */
-  export interface ExtWindowId {
+  export interface WindowId {
     /** Window ID. */
     id: string
     /** Owning extension ID. */
@@ -170,7 +170,7 @@ declare namespace ext.windows {
   }
 
   /** Window event. */
-  export interface ExtWindowEvent {
+  export interface WindowEvent {
     /** Window ID. */
     id: string
     /** Owning extension ID. */
@@ -178,13 +178,13 @@ declare namespace ext.windows {
   }
 
   /** Menu item clicked. */
-  export interface ExtWindowEventMenuClicked {
+  export interface EventMenuClicked {
     /** Menu tag. */
     tag?: string
   }
 
   /** Event handler. */
-  export interface ExtWindowsHandler<Listener> {
+  interface EventHandler<Listener> {
     /**
      * Register listener.
      * @param listener Listener to invoke.
@@ -198,11 +198,11 @@ declare namespace ext.windows {
   }
 
   // Generic
-  export function get(windowId: string): Promise<ExtWindow>
-  export function query(filter?: Partial<ExtWindow>): Promise<ExtWindow[]>
-  export function create(properties?: ExtWindowProperties): Promise<ExtWindow>
+  export function get(windowId: string): Promise<Window>
+  export function query(filter?: Partial<Window>): Promise<Window[]>
+  export function create(properties?: WindowProperties): Promise<Window>
   export function remove(windowIds: string | string[]): Promise<void> 
-  export function update(windowIds: string | string[], properties?: ExtWindowUpdate): Promise<void>
+  export function update(windowIds: string | string[], properties?: WindowUpdate): Promise<void>
 
   // State
   export function focus(windowId: string): Promise<void>
@@ -232,7 +232,7 @@ declare namespace ext.windows {
   export function setTitle(windowId: string, title: string): Promise<void>
   export function getTitle(windowId: string): Promise<string>
   export function setTitleButtonsPosition(windowId: string, x: number, y: number): Promise<void>
-  export function getTitleButtonsPosition(windowId: string): Promise<ExtWindowPoint>
+  export function getTitleButtonsPosition(windowId: string): Promise<Point>
   export function setEnabled(windowId: string, enabled: boolean): Promise<void>
   export function isEnabled(windowId: string): Promise<boolean>
 
@@ -251,26 +251,26 @@ declare namespace ext.windows {
   export function isClosable(windowId: string): Promise<boolean>
 
   // Bounds
-  export function setBounds(windowId: string, bounds: Partial<ExtWindowRectangle>, animate?: boolean): Promise<void>
-  export function getBounds(windowId: string): Promise<ExtWindowRectangle>
-  export function setContentBounds(windowId: string, bounds: ExtWindowRectangle, animate?: boolean): Promise<void>
-  export function getContentBounds(windowId: string): Promise<ExtWindowRectangle>
-  export function getNormalBounds(windowId: string): Promise<ExtWindowRectangle>
+  export function setBounds(windowId: string, bounds: Partial<Rectangle>, animate?: boolean): Promise<void>
+  export function getBounds(windowId: string): Promise<Rectangle>
+  export function setContentBounds(windowId: string, bounds: Rectangle, animate?: boolean): Promise<void>
+  export function getContentBounds(windowId: string): Promise<Rectangle>
+  export function getNormalBounds(windowId: string): Promise<Rectangle>
   
   // Size
   export function setSize(windowId: string, width: number, height: number, animate?: boolean): Promise<void>
-  export function getSize(windowId: string): Promise<ExtWindowSize>
+  export function getSize(windowId: string): Promise<Size>
   export function setContentSize(windowId: string, width: number, height: number, animate?: boolean): Promise<void>
-  export function getContentSize(windowId: string): Promise<ExtWindowSize>
+  export function getContentSize(windowId: string): Promise<Size>
   export function setMinimumSize(windowId: string, width: number | null, height: number | null, animate?: boolean): Promise<void>
-  export function getMinimumSize(windowId: string): Promise<Partial<ExtWindowSize>>
+  export function getMinimumSize(windowId: string): Promise<Partial<Size>>
   export function setMaximumSize(windowId: string, width: number | null, height: number | null, animate?: boolean): Promise<void>
-  export function getMaximumSize(windowId: string): Promise<Partial<ExtWindowSize>>
+  export function getMaximumSize(windowId: string): Promise<Partial<Size>>
   export function setAspectRatio(windowId: string, ratio: number | null): Promise<void>
 
   // Positioning
   export function setPosition(windowId: string, x: number, y: number): Promise<void>
-  export function getPosition(windowId: string): Promise<ExtWindowPoint>
+  export function getPosition(windowId: string): Promise<Point>
   export function center(windowId: string): Promise<void>
 
   // Z-index
@@ -280,8 +280,8 @@ declare namespace ext.windows {
   
   // Hierarchy
   export function setParentWindow(windowId: string, parentWindowId: string): Promise<void>
-  export function getParentWindow(windowId: string): Promise<ExtWindowId|null>
-  export function getChildWindows(windowId: string): Promise<ExtWindowId[]>
+  export function getParentWindow(windowId: string): Promise<WindowId|null>
+  export function getChildWindows(windowId: string): Promise<WindowId[]>
   export function removeParentWindow(windowId: string): Promise<void>
   
   // Menu bar
@@ -289,11 +289,11 @@ declare namespace ext.windows {
   export function isMenuAutoHide(windowId: string): Promise<boolean>
   export function setMenuVisibility(windowId: string, value: boolean): Promise<void>
   export function isMenuVisible(windowId: string): Promise<boolean>
-  export function setMenu(windowId: string, menu: ExtWindowMenuItem[]): Promise<void>
+  export function setMenu(windowId: string, menu: MenuItem[]): Promise<void>
   export function removeMenu(windowId: string): Promise<void>
   
   // Context menu
-  export function openContextMenu(windowId: string, menu: ExtWindowMenuItem[], x: number, y: number, positionIndex?: number): Promise<void>
+  export function openContextMenu(windowId: string, menu: MenuItem[], x: number, y: number, positionIndex?: number): Promise<void>
   export function closeContextMenu(windowId: string): Promise<void>
   
   // Misc
@@ -305,40 +305,40 @@ declare namespace ext.windows {
   // Events
   
   /** Window created. */
-  export const onCreated: ExtWindowsHandler<(event: ExtWindowEvent, details: ExtWindow) => void>
+  export const onCreated: EventHandler<(event: WindowEvent, details: Window) => void>
   /** Window removed. */
-  export const onRemoved: ExtWindowsHandler<(event: ExtWindowEvent, details: ExtWindow) => void>
+  export const onRemoved: EventHandler<(event: WindowEvent, details: Window) => void>
   /** Window closed. */
-  export const onClosed: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onClosed: EventHandler<(event: WindowEvent) => void>
   /** Window gained focus. */
-  export const onFocused: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onFocused: EventHandler<(event: WindowEvent) => void>
   /** Window lost focus. */
-  export const onUnfocused: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onUnfocused: EventHandler<(event: WindowEvent) => void>
   /** Window changed from invisible to visible. */
-  export const onShown: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onShown: EventHandler<(event: WindowEvent) => void>
   /** Window changed from visible to invisible. */
-  export const onHidden: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onHidden: EventHandler<(event: WindowEvent) => void>
   /** Window entered fullscreen mode. */
-  export const onEnteredFullscreen: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onEnteredFullscreen: EventHandler<(event: WindowEvent) => void>
   /** Window exited fullscreen mode. */
-  export const onExitedFullscreen: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onExitedFullscreen: EventHandler<(event: WindowEvent) => void>
   /** Window maximized. */
-  export const onMaximized: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onMaximized: EventHandler<(event: WindowEvent) => void>
   /** Window unmaximized. */
-  export const onUnmaximized: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onUnmaximized: EventHandler<(event: WindowEvent) => void>
   /** Window minimized. */
-  export const onMinimized: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onMinimized: EventHandler<(event: WindowEvent) => void>
   /** Window restored from minimized state. */
-  export const onRestored: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onRestored: EventHandler<(event: WindowEvent) => void>
   /** Window resized. */
-  export const onResized: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onResized: EventHandler<(event: WindowEvent) => void>
   /** Window moved. */
-  export const onMoved: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onMoved: EventHandler<(event: WindowEvent) => void>
   /** Menu item clicked. */
-  export const onMenuClicked: ExtWindowsHandler<(event: ExtWindowEvent, details: ExtWindowEventMenuClicked) => void>
+  export const onMenuClicked: EventHandler<(event: WindowEvent, details: EventMenuClicked) => void>
   /** Context menu item clicked. */
-  export const onContextMenuClicked: ExtWindowsHandler<(event: ExtWindowEvent, details: ExtWindowEventMenuClicked) => void>
+  export const onContextMenuClicked: EventHandler<(event: WindowEvent, details: EventMenuClicked) => void>
   /** Context menu closed. */
-  export const onContextMenuClosed: ExtWindowsHandler<(event: ExtWindowEvent) => void>
+  export const onContextMenuClosed: EventHandler<(event: WindowEvent) => void>
 
 }
