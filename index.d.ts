@@ -75,8 +75,6 @@ declare namespace ext.windows {
     shadow: boolean
     /** Window opacity. */
     opacity: number
-    /** True if vibrancy is enabled. */
-    vibrancy: boolean
   }
 
   /** Window creation properties. */
@@ -163,10 +161,12 @@ declare namespace ext.windows {
     menuVisible?: boolean
     /** True if window is flashing. */
     flashing?: boolean
-    /** True if vibrancy is enabled. */
-    vibrancy?: boolean
     /** Window background css. */
     backgroundCSS?: string
+    /** Vibrancy state or platform to use platform settings. */
+    vibrancy?: boolean | 'platform'
+    /** Dark mode state, platform to use platform settings or system to use system settings. */
+    darkMode?: boolean | 'platform' | 'system'
   }
 
   /** Window update properties. */
@@ -244,7 +244,9 @@ declare namespace ext.windows {
     /** New flashing state. */
     flashing?: boolean
     /** New vibrancy state. */
-    vibrancy?: boolean
+    vibrancy?: boolean | 'platform'
+    /** New dark mode state. */
+    darkMode?: boolean | 'platform' | 'system'
   }
 
   /** Menu item properties. */
@@ -304,6 +306,24 @@ declare namespace ext.windows {
   export interface EventMenuClicked {
     /** Menu tag. */
     tag?: string
+  }
+
+  /** Vibrancy event. */
+  export interface EventVibrancy {
+    /** True if window vibrancy is enabled. */
+    enabled: boolean
+    /** True if platform vibrancy is enabled. */
+    platform: boolean
+  }
+
+  /** Dark mode event. */
+  export interface EventDarkMode {
+    /** True if window dark mode is enabled. */
+    enabled: boolean
+    /** True if platform dark mode is enabled. */
+    platform: boolean
+    /** True if system dark mode is enabled. */
+    system: boolean
   }
 
   /** Event handler. */
@@ -463,12 +483,27 @@ declare namespace ext.windows {
   // Appearance
 
   /**
+   * Get current platform vibrancy settings.
+   */
+  export function getPlatformVibrancy(): Promise<boolean>
+
+  /**
+   * Get current platform dark mode settings.
+   */
+  export function getPlatformDarkMode(): Promise<boolean>
+
+  /**
+   * Get current system dark mode settings.
+   */
+  export function getSystemDarkMode(): Promise<boolean>
+
+  /**
    * Sets the vibrancy for the specified window.
    * @param windowId The ID of the window to modify.
-   * @param value True if vibrancy is enabled.
+   * @param value Vibrancy state or platform to use platform settings.
    * @returns The promise resolves when the window is updated.
    */
-  export function setVibrancy(windowId: string, value: boolean): Promise<void>
+  export function setVibrancy(windowId: string, value: boolean | 'platform'): Promise<void>
 
   /**
    * Gets the vibrancy for the specified window.
@@ -476,6 +511,21 @@ declare namespace ext.windows {
    * @returns The promise resolves with a boolean indicating if the window has vibrancy.
    */
   export function hasVibrancy(windowId: string): Promise<boolean>
+
+  /**
+   * Sets the dark mode for the specified window.
+   * @param windowId The ID of the window to modify.
+   * @param value Dark mode state, platform to use platform settings or system to use system settings.
+   * @returns The promise resolves when the window is updated.
+   */
+  export function setDarkMode(windowId: string, value: boolean | 'platform' | 'system'): Promise<void>
+
+  /**
+   * Checks if the specified window has dark mode enabled.
+   * @param windowId The ID of the window to check.
+   * @returns The promise resolves with a boolean indicating if the window has dark mode enabled.
+   */
+  export function hasDarkMode(windowId: string): Promise<boolean>
 
   /**
    * Sets the background color for the specified window.
@@ -980,6 +1030,10 @@ declare namespace ext.windows {
   export const onEnteredFullscreen: EventHandler<(event: WindowEvent) => void>
   /** Window exited fullscreen mode. */
   export const onExitedFullscreen: EventHandler<(event: WindowEvent) => void>
+  /** Window dark mode changed. */
+  export const onUpdatedVibrancy: EventHandler<(event: WindowEvent, details: EventVibrancy) => void>
+  /** Window dark mode changed. */
+  export const onUpdatedDarkMode: EventHandler<(event: WindowEvent, details: EventDarkMode) => void>
   /** Window maximized. */
   export const onMaximized: EventHandler<(event: WindowEvent) => void>
   /** Window unmaximized. */
