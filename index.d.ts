@@ -316,10 +316,24 @@ declare namespace ext.windows {
     platform: boolean
   }
 
+  /** Global vibrancy event. */
+  export interface EventGlobalVibrancy {
+    /** True if platform vibrancy is enabled. */
+    platform: boolean
+  }
+
   /** Dark mode event. */
   export interface EventDarkMode {
     /** True if window dark mode is enabled. */
     enabled: boolean
+    /** True if platform dark mode is enabled. */
+    platform: boolean
+    /** True if system dark mode is enabled. */
+    system: boolean
+  }
+
+  /** Global dark mode event. */
+  export interface EventGlobalDarkMode {
     /** True if platform dark mode is enabled. */
     platform: boolean
     /** True if system dark mode is enabled. */
@@ -1030,10 +1044,14 @@ declare namespace ext.windows {
   export const onEnteredFullscreen: EventHandler<(event: WindowEvent) => void>
   /** Window exited fullscreen mode. */
   export const onExitedFullscreen: EventHandler<(event: WindowEvent) => void>
-  /** Window dark mode changed. */
+  /** Window vibrancy changed. */
   export const onUpdatedVibrancy: EventHandler<(event: WindowEvent, details: EventVibrancy) => void>
   /** Window dark mode changed. */
   export const onUpdatedDarkMode: EventHandler<(event: WindowEvent, details: EventDarkMode) => void>
+  /** Platform vibrancy changed */
+  export const onUpdatedGlobalVibrancy: EventHandler<(details: EventGlobalVibrancy) => void>
+  /** Platform or system dark mode changed. */
+  export const onUpdatedGlobalDarkMode: EventHandler<(details: EventGlobalDarkMode) => void>
   /** Window maximized. */
   export const onMaximized: EventHandler<(event: WindowEvent) => void>
   /** Window unmaximized. */
