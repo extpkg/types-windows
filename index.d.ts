@@ -142,7 +142,7 @@ declare namespace ext.windows {
     /** True if transparent. */
     transparent?: boolean
     /** Title bar configuration for frameless windows. */
-    titleBarStyle?: 'inset' | 'hidden'
+    titleBarStyle?: 'hidden' | 'inset' | 'inset-windows' | 'inset-linux'
     /** Title bar buttons position. */
     titleButtonsPosition?: Point
     /** True if window has rounded corners. */
@@ -616,6 +616,13 @@ declare namespace ext.windows {
    * @returns The promise resolves with the position of title buttons.
    */
   export function getTitleButtonsPosition(windowId: string): Promise<Point>
+
+  /**
+   * Gets the inset title buttons size.
+   * @param windowId The ID of the window to get.
+   * @returns The promise resolves with the size of the inset title buttons.
+   */
+  export function getInsetSize(windowId: string): Promise<Size | null>
 
   /**
    * Sets the enabled state of the specified window.

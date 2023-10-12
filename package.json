@@ -1,6 +1,6 @@
 {
   "name": "@extpkg/types-windows",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Types for EXT windows module",
   "author": "EXT, Inc.",
   "license": "MIT",
